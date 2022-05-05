@@ -7,8 +7,8 @@ function ToyCard({ card, handleRemove }) {
   const handleLikeBtnClick = (e) => {
     let numberOfLikes = parseInt(e.target.textContent.split(' ')[1]) + 1
     setLike(numberOfLikes)
-    console.log("Toy's id:", id);
-    console.log("Number of likes:", numberOfLikes);
+    // console.log("Toy's id:", id);
+    // console.log("Number of likes:", numberOfLikes);
 
     fetch(`http://localhost:3001/toys/${id}`, {
       method: "PATCH",
@@ -16,7 +16,7 @@ function ToyCard({ card, handleRemove }) {
         "Content-Type": "application/json"
       },
       body: JSON.stringify({
-        likes: like
+        likes: numberOfLikes
       })
     })
     .then(res => res.json())
@@ -24,7 +24,6 @@ function ToyCard({ card, handleRemove }) {
   }
 
   function handleDelete() {
-    console.log("Delete id:", id);
     fetch(`http://localhost:3001/toys/${id}`, {
       method: 'DELETE'
     }).then(res => res.json())
