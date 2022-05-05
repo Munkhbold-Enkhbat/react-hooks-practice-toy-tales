@@ -1,14 +1,37 @@
 import React, { useState } from "react";
 
-function ToyCard({ card }) {
-  const { name, image, likes } = card 
+function ToyCard({ card, handleRemove }) {
+  const { id, name, image, likes } = card 
   const [like, setLike] = useState(likes)
 
-  function handleLikeBtnClick(e) {
-    let numberOfLikes = e.target.textContent.split(' ')[1]
-    setLike(parseInt(numberOfLikes) + 1)
+  const handleLikeBtnClick = (e) => {
+    let numberOfLikes = parseInt(e.target.textContent.split(' ')[1]) + 1
+    setLike(numberOfLikes)
+    console.log("Toy's id:", id);
+    console.log("Number of likes:", numberOfLikes);
+
+    fetch(`http://localhost:3001/toys/${id}`, {
+      method: "PATCH",
+      header: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        likes: like
+      })
+    })
+    .then(res => res.json())
+    .then(data => console.log("Updated data likes:", data))
   }
-  
+
+  function handleDelete() {
+    console.log("Delete id:", id);
+    fetch(`http://localhost:3001/toys/${id}`, {
+      method: 'DELETE'
+    }).then(res => res.json())
+      .then(data => console.log("Toy is successfully deleted!", data))
+      handleRemove(id)
+  } 
+
   return (
     <div className="card">
       <h2>{name}</h2>
@@ -17,9 +40,9 @@ function ToyCard({ card }) {
         alt={name}
         className="toy-avatar"
       />
-      <p>{likes} Likes </p>
+      <p>{like} Likes </p>
       <button className="like-btn" onClick={handleLikeBtnClick}>Like {like}</button>
-      <button className="del-btn">Donate to GoodWill</button>
+      <button className="del-btn" onClick={handleDelete}>Donate to GoodWill</button>
     </div>
   );
 }

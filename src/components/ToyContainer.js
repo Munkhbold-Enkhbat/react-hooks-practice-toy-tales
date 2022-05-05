@@ -10,9 +10,15 @@ function ToyContainer() {
     .then(data => setCards(data))
   }, [])
 
+  const handleRemoveFromList = (id) => {
+    let updatedCards = cards.filter(card => card.id !== id)
+    setCards(updatedCards)
+  }
+  
+
   const renderCards = () => {
     return cards.map(c => {
-      return <ToyCard key={c.id} card={c}/>
+      return <ToyCard key={c.id} card={c} handleRemove={handleRemoveFromList}/>
     })
   }
   return (
