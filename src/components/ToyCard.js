@@ -3,6 +3,11 @@ import React, { useState } from "react";
 function ToyCard({ card }) {
   const { name, image, likes } = card 
   const [like, setLike] = useState(likes)
+
+  function handleLikeBtnClick(e) {
+    let numberOfLikes = e.target.textContent.split(' ')[1]
+    setLike(parseInt(numberOfLikes) + 1)
+  }
   
   return (
     <div className="card">
@@ -13,7 +18,7 @@ function ToyCard({ card }) {
         className="toy-avatar"
       />
       <p>{likes} Likes </p>
-      <button className="like-btn">Like {"<3"}</button>
+      <button className="like-btn" onClick={handleLikeBtnClick}>Like {like}</button>
       <button className="del-btn">Donate to GoodWill</button>
     </div>
   );
