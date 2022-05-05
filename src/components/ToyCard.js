@@ -5,10 +5,9 @@ function ToyCard({ card, handleRemove }) {
   const [like, setLike] = useState(likes)
 
   const handleLikeBtnClick = (e) => {
-    let numberOfLikes = parseInt(e.target.textContent.split(' ')[1]) + 1
-    setLike(numberOfLikes)
-    // console.log("Toy's id:", id);
-    // console.log("Number of likes:", numberOfLikes);
+    // const numberOfLikes = parseInt(e.target.textContent.split(' ')[1]) + 1  
+    let previousLike = like + 1
+    setLike(previousLike)
 
     fetch(`http://localhost:3001/toys/${id}`, {
       method: "PATCH",
@@ -16,7 +15,7 @@ function ToyCard({ card, handleRemove }) {
         "Content-Type": "application/json"
       },
       body: JSON.stringify({
-        likes: numberOfLikes
+        likes: like
       })
     })
     .then(res => res.json())
