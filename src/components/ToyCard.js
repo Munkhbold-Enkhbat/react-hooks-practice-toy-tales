@@ -1,7 +1,7 @@
 import React from "react";
 
-function ToyCard({ card, handleRemove, handleUpdateLike }) {
-  const { id, name, image, likes } = card 
+function ToyCard({ toy, handleRemove, handleUpdateLike }) {
+  const { id, name, image, likes } = toy 
   
   const handleLikeBtnClick = () => {
     fetch(`http://localhost:3001/toys/${id}`, {
