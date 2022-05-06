@@ -16,9 +16,7 @@ function ToyContainer() {
   }
 
   function handleUpdateLike(toy) {
-    const newCards = cards.map(card => {
-      return card.id === toy.id ? toy : card
-    })
+    const newCards = cards.map(card => card.id === toy.id ? toy : card)
     setCards(newCards)
   }
   
