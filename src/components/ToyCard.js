@@ -1,25 +1,20 @@
-import React, { useState } from "react";
+import React from "react";
 
-function ToyCard({ card, handleRemove }) {
+function ToyCard({ card, handleRemove, handleUpdateLike }) {
   const { id, name, image, likes } = card 
-  const [like, setLike] = useState(likes)
-
-  const handleLikeBtnClick = (e) => {
-    // const numberOfLikes = parseInt(e.target.textContent.split(' ')[1]) + 1  
-    let previousLike = like + 1
-    setLike(previousLike)
-
+  
+  const handleLikeBtnClick = () => {
     fetch(`http://localhost:3001/toys/${id}`, {
       method: "PATCH",
-      header: {
+      headers: {
         "Content-Type": "application/json"
       },
       body: JSON.stringify({
-        likes: like
+        likes: likes + 1,
       })
     })
     .then(res => res.json())
-    .then(data => console.log("Updated data likes:", data))
+    .then(data => handleUpdateLike(data))
   }
 
   function handleDelete() {
@@ -38,8 +33,8 @@ function ToyCard({ card, handleRemove }) {
         alt={name}
         className="toy-avatar"
       />
-      <p>{like} Likes </p>
-      <button className="like-btn" onClick={handleLikeBtnClick}>Like {like}</button>
+      <p>{likes} Likes </p>
+      <button className="like-btn" onClick={handleLikeBtnClick}>Like {likes}</button>
       <button className="del-btn" onClick={handleDelete}>Donate to GoodWill</button>
     </div>
   );

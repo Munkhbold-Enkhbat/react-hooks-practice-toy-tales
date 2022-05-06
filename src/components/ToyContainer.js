@@ -14,11 +14,18 @@ function ToyContainer() {
     let updatedCards = cards.filter(card => card.id !== id)
     setCards(updatedCards)
   }
+
+  function handleUpdateLike(toy) {
+    const newCards = cards.map(card => {
+      return card.id === toy.id ? toy : card
+    })
+    setCards(newCards)
+  }
   
 
   const renderCards = () => {
     return cards.map(c => {
-      return <ToyCard key={c.id} card={c} handleRemove={handleRemoveFromList}/>
+      return <ToyCard key={c.id} card={c} handleRemove={handleRemoveFromList} handleUpdateLike={handleUpdateLike}/>
     })
   }
   return (
